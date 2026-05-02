@@ -1,18 +1,22 @@
-# File Organizer
-A Python CLI tool that organizes your files by extension.
-## Usage
-python main.py organize ./my_folder
-python main.py find ./my_folder .txt
-python main.py undo
-python main.py history
-## Commands
-- **organize** - moves files into subfolders named by extension
-- **find** - returns all files with a given extension
-- **undo** - reverses the last move
-- **history** - shows all logged moves
+# Expense Tracker
+a simple python program that track your expenses .
+## usage:
+py main.py add   amount  category  note
+py main.py list
+py main.py summary
+py main.py delete  id
+## example
+py main.py add 50 food lunch
+py main.py list
+py main.py summary 
+py main.py delete 3
+## command
+- **add** - add expense to the json file 
+- **list** - list all the expense
+- **summary** - give u a small summary about your expense status
+- **delete** - delete an expense by its id
 ## Project Structure
-file_organizer/
+ExpenseTracker/
 ├── main.py
-├── organizer.py
-├── logger.py
+├── tracker.py
 └── README.md
