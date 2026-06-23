@@ -1,28 +1,42 @@
 #import nedded modules
 import shutil
 import os
-#create a class MoveLogger ; the class should take 3 mehods
+#create a class MoveLogger 
 class MoveLogger:
 #log(src,dist) save a move to moves.log
     def log(self,source,distination):
         with open("moves.log","a+") as f:
             f.write(f"{source}->{distination}\n")
-#undo last(self) that read the last move and reverse it
-    def undo_last(self):
-        with open("moves.log","r") as f:
-            logs = f.readlines()
-            if not logs:
-                print("there is nothing to undo")
-                return
-            log = logs[-1].strip()
-            src,dist = log.split("->")
-            shutil.move(dist,src)
-#and the get history methode that return all the history inside the file as a list
-#oh i overthinged about it no need for seek jsut open thte file in r mode and the cursor will point on the begging of the file
+    def undo(self):
+        try:
+            with open("moves.log","r") as f:
+                log = f.readlines()
+                if  not log :
+                    print("try to organize ur folder first!!")
+                    return
+                for line in reversed(log):
+                    if "--session--" in line:
+                        break
+                    src , dest = line.strip().split("->")
+                    shutil.move(dest,src)
+        except FileNotFoundError :
+            print("try to organize the folder first")
+            print("you did not do  changes to undo them !!!!")
     def get_history(self):
-        with open("moves.log","r") as f:
-            data = f.readlines()
-            if not data:
-                return None
-            return data
-            #return   [element.strip() for element in data]
+        try: 
+            with open("moves.log","r") as f:
+                print("your history are:")
+                for line in f:
+                    if not line.strip():
+                        print("no history found! try organize your folder first:)")
+                        break
+                    if "--session--" in line:
+                        continue
+                    _,dest = line.strip().split("->")
+                    filename = os.path.basename(dest)
+                    foldername = os.path.basename(os.path.dirname(dest))
+                    print(f"+[{filename}] <<Was Moved To>> {foldername}/")
+                    print("")
+        except FileNotFoundError :
+            print("you have no history yet try to organize your folder first:)")
+
