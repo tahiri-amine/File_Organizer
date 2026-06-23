@@ -7,23 +7,15 @@ class FileOrganiser:
 #the constractor must take the path as the paramertre and check if that path exist
     def __init__(self,path):
         self.logger = MoveLogger()
-        if os.path.exists(path):
+        if os.path.exists(path) :
             self.path = path
         else:
-            raise ValueError("Path not found!")
-       
-#a methode list file that list all files and ignore files in subfolder and folders
-    def list_files(self):
-        files_lst = []
-        files = os.listdir(self.path)
-        for file in files:
-            if os.path.isfile(os.path.join(self.path,file)):
-                files_lst.append(file)
-            else:
-                continue
-        return files_lst
+            raise ValueError("Path not found! ")
+    
+   
 #a methode organiser that move each file into a subfolde named with the file extention
     def organiser(self):
+        self.logger.log("--session--","--session--")
         files = os.listdir(self.path)
         for file in files:
             if os.path.isfile(os.path.join(self.path,file)):
@@ -36,6 +28,8 @@ class FileOrganiser:
                 continue
 #a find methode that takes an ext and return all files with that extention
     def find_files(self,ext,path = None):#this one must check subfolders too
+        if not ext.lower().startswith("."):
+                    ext = "." + ext
         founded_files = []
         if path is None:
             path = self.path
@@ -43,6 +37,7 @@ class FileOrganiser:
         for file in files:
             if os.path.isfile(os.path.join(path,file)):
                 _,extention = os.path.splitext(file)
+               
                 if ext.lower() == extention:
                     founded_files.append(file)
                 else:
@@ -50,5 +45,15 @@ class FileOrganiser:
             else:
                 founded_files.extend(self.find_files(ext,os.path.join(path,file)))
         return founded_files
+    def preview(self):
+            print("Preview Mode:")
+            files = os.listdir(self.path)
+            for file in files:
+                if os.path.isfile(os.path.join(self.path,file)):
+                    _,ext = os.path.splitext(file)
+                    print(f"+[{file}] <<-- Will Be Moved To -->> {ext[1:]}/\n")
+    
+
+
                 
 
