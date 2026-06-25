@@ -3,7 +3,7 @@ A Python CLI tool that organizes your files by extension.
 ## Usage
 ```
 python main.py organize -fp <path>
-python main.py find -fp <path> -ext <extisions>
+python main.py find -fp <path> -ext <extension>
 python main.py preview -fp <path>
 python main.py undo
 python main.py history
